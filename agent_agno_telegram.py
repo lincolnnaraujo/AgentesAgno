@@ -15,19 +15,19 @@ formatando a resposta em Markdown V2.
 
 # === 1. IMPORTS E CONFIGURAÇÃO INICIAL ===
 
-import os
 import logging
-from dotenv import load_dotenv, find_dotenv
+import os
 
+from agno.agent import Agent
 # --- Bibliotecas Agno (O Framework do Agente) ---
 from agno.models.google import Gemini
-from agno.agent import Agent
 from agno.tools.tavily import TavilyTools
 from agno.tools.telegram import TelegramTools
 from agno.tools.yfinance import YFinanceTools
-
+from dotenv import load_dotenv, find_dotenv
 # --- Bibliotecas Telegram (A Interface do Bot) ---
 from telegram import Update
+from telegram.constants import ChatAction
 from telegram.ext import (
     Application,
     CommandHandler,
@@ -35,7 +35,9 @@ from telegram.ext import (
     ContextTypes,
     filters
 )
-from telegram.constants import ParseMode, ChatAction
+
+from customTools.PokemonApiTools import PokemonApiTools
+from functions.SanitizarStringContent import sanitizar_string_para_log
 
 # === 2. CONFIGURAÇÃO DE LOGGING ===
 
@@ -135,6 +137,8 @@ logger.info("Ferramenta Telegram (Enviar Mensagem) adicionada.")
 tools_list.append(YFinanceTools())
 logger.info("Ferramenta YFinance (Cotações) adicionada.")
 
+#4. Ferramenta de Pokémon (API personalizada)
+tools_list.append(PokemonApiTools())
 
 # === 6. CONFIGURAÇÃO DO AGENTE (AGNO) ===
 
@@ -149,7 +153,14 @@ agent = Agent(
         "Você é um assistente de pesquisa.",
         "Você DEVE usar a ferramenta TavilySearch para pesquisar na internet a mensagem do usuário.",
         "Após obter os resultados da busca, sintetize uma resposta clara e útil.",
-        "Você DEVE formatar sua resposta final inteiramente na sintaxe Markdown V2.",
+        "Caso o prompt do usuario seja sobre finanças, utilize a ferramenta YFinance para obter dados atualizados do mercado.",
+        "Se o usuário pedir informações sobre Pokémon, utilize a ferramenta PokemonApiTools para obter dados precisos.",
+        "Se você encontrar links relevantes durante a busca, inclua-os na resposta formatada.",
+        "Se você precisar enviar mensagens proativamente, use a ferramenta TelegramSendMessage.",
+        "Se o usuario informar no prompt alguma data especifica, utilize a ferramenta tavily para buscar informações atualizadas sobre o assunto na data informada.",
+        "Se o usuario for ofensivo no prompt, decida apenas solicitar ao usuario mais educacao.",
+        "Você DEVE verificar e corrigir qualquer erro de sintaxe e semantica da lingua portugeues antes de fornecer a resposta final.",
+        "Seja conciso e direto ao ponto em suas respostas."
     ],
 
     # Habilita o processamento de Markdown na saída do Agno
@@ -198,10 +209,11 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # 2. Extrai a string de texto final da propriedade .content
         response_text = run_output.content
 
+        texto_limpo = sanitizar_string_para_log(response_text)
+
         # 3. Envia a resposta formatada em Markdown V2
         await update.message.reply_text(
-            text=str(response_text),
-            parse_mode=ParseMode.MARKDOWN_V2
+            text=texto_limpo
         )
 
     except Exception as e:
