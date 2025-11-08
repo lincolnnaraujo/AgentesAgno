@@ -161,6 +161,7 @@ agent = Agent(
         "Se o usuario for ofensivo no prompt, decida apenas solicitar ao usuario mais educacao.",
         "Você DEVE verificar e corrigir qualquer erro de sintaxe e semantica da lingua portugeues antes de fornecer a resposta final.",
         "Seja conciso e direto ao ponto em suas respostas."
+        "O formato da resposta deve ser em Markdown V2."
     ],
 
     # Habilita o processamento de Markdown na saída do Agno
@@ -209,10 +210,10 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE) -> 
         # 2. Extrai a string de texto final da propriedade .content
         response_text = run_output.content
 
-        texto_limpo = sanitizar_string_para_log(response_text)
+        texto_limpo = response_text
 
         # 3. Envia a resposta formatada em Markdown V2
-        await update.message.reply_text(
+        await update.message.reply_html(
             text=texto_limpo
         )
 
