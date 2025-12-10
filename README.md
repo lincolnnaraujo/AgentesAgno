@@ -34,3 +34,8 @@ Exemplo (Windows PowerShell):
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r requirements.txt
+
+```
+
+## Modificação via Agent
+Branch criada e modificada pelo agente Agno em 2025-12-10 19:30:44
