@@ -8,9 +8,9 @@ Repositório com vários exemplos e proofs-of-concept (POCs) mostrando como cria
 - `agent_agno_gemini.py` — exemplo de agente configurado para Gemini.  
 - `agent_rag_pdf.py` — exemplo RAG com PDFs.  
 - `agent_financeiro_deepseek.py` — exemplo financeiro.  
-- `agent_researcher_deepseek.py` — exemplo researcher.  
-- `keys/` — local sugerido para chaves/JSON de serviço.  
-- `pdfs/` — PDFs de exemplo.  
+- `agent_researcher_deepseek.py` — exemplo researcher.
+- `agent_git_developer.py` — agente completo para operações Git (clone, modificar, PR).
+- `agent_agno_telegram.py` — agente integrado com Telegram.
 - `tmp/` — artefatos de execução:
   - `tmp/data.db` — SQLite para histórico.
   - `tmp/chromadb/` — armazenamento ChromaDB (recomendado).
@@ -24,13 +24,23 @@ Repositório com vários exemplos e proofs-of-concept (POCs) mostrando como cria
 - Exemplos RAG sobre PDFs e integração com Tavily para buscas web.
 
 ## Requisitos
-
+- Agente completo de Git Developer para automação de repositórios GitHub.
 - Python 3.10+  
 - Recomenda-se criar um ambiente virtual.
 
 Exemplo (Windows PowerShell):
-
+- Git instalado e no PATH
 ```powershell
 python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
+## Instalação e Configuração
+
+### 1. Clone o repositório
+
+```bash
+git clone https://github.com/lincolnnaraujo/AgentesAgno.git
+cd AgentesAgno
+```
+
+### 2. Crie e ative um ambiente virtual
+
+**Windows PowerShell:**
