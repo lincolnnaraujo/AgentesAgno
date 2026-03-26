@@ -1,0 +1,65 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual Environment
+venv/
+.venv/
+env/
+ENV/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Environment variables
+.env
+.env.local
+
+# Keys and credentials
+keys/
+*.json
+!package.json
+
+# Temporary files
+tmp/
+*.db
+*.sqlite3
+*.log
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ChromaDB & LanceDB
+chromadb/
+lancedb/
+chromadb_pdf/
+
+# Instagram photos (if not needed)
+instagram_photos/
+
+# Data files
+*.lance/
+
