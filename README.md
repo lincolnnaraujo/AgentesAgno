@@ -44,3 +44,8 @@ cd AgentesAgno
 ### 2. Crie e ative um ambiente virtual
 
 **Windows PowerShell:**
+
+```
+
+## Modificação via Agent
+Branch criada e modificada pelo agente Agno em 2025-12-10 19:30:44
